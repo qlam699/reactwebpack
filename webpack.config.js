@@ -1,9 +1,13 @@
 
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractplugin = require('mini-css-extract-plugin')
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractplugin = require('mini-css-extract-plugin');
 
 module.exports = {
+    entry: [
+        'regenerator-runtime/runtime',
+        './src/index.js'
+      ],
     // Where files should be sent once they are bundled
     output: {
         path: path.join(__dirname, '/dist'),
@@ -13,8 +17,9 @@ module.exports = {
     devServer: {
         port: 3000,
         watchContentBase: true,
-        historyApiFallback: true
+        historyApiFallback: true,
     },
+    devtool: 'inline-source-map',
     // Rules of how webpack will take our files, complie & bundle them for the browser 
     module: {
         rules: [
@@ -34,11 +39,14 @@ module.exports = {
                 loader: 'file-loader',
                 options: {
                     outputPath: 'images',
-                  },
-            }
+                },
+            },
         ]
     },
-    plugins: [new HtmlWebpackPlugin({ template: './src/index.html' }), new MiniCssExtractplugin()],
+    plugins: [
+        new HtmlWebpackPlugin({ template: './src/index.html' }),
+        new MiniCssExtractplugin()
+    ],
     resolve: {
         alias: {
             "@img": path.resolve(__dirname, 'src/assets/img/'),
